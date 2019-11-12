@@ -1,5 +1,5 @@
-c2
-c4
-p5
-s3
-u1
+score 1
+score 2
+score 3
+score 4
+score 5
