@@ -2,10 +2,15 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:path/path.dart';
 
 
 
@@ -36,6 +41,7 @@ class _MyAppState extends State<MyApp> {
   double _imageHeight;
   double _imageWidth;
   bool _busy = false;
+  String _userId;
 
   Future predictImagePicker() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -44,6 +50,41 @@ class _MyAppState extends State<MyApp> {
       _busy = true;
     });
     predictImage(image);
+  }
+  Future cameraPicker() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    if (image == null) return;
+    setState(() {
+      _busy = true;
+    });
+    predictImage(image);
+  }
+
+
+  Future<void> _showChoiceDialog(BuildContext context) {
+    return showDialog(context: context, builder: (BuildContext context) {
+      return AlertDialog(
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              GestureDetector(
+                child: Text("คลังภาพ"),
+                onTap: () {
+                  predictImagePicker();
+                },
+              ),
+              Padding(padding: EdgeInsets.all(8.0)),
+              GestureDetector(
+                child: Text("กล้อง"),
+                onTap: () {
+                  cameraPicker();
+                }, //onTap
+              ) //GestureDetector
+            ], //<>Widget[]
+          ), //ListBody
+        ), //SingleChildScrollView
+      ); //AlertDialog
+    });
   }
 
   Future predictImage(File image) async {
@@ -342,6 +383,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth.instance.currentUser().then((user) {
+      _userId = user.uid;
+    });
     Size size = MediaQuery.of(context).size;
     List<Widget> stackChildren = [];
 
@@ -351,7 +395,7 @@ class _MyAppState extends State<MyApp> {
         left: 0.0,
         width: size.width,
         child: _image == null
-            ? Text('No image selected.')
+            ? Text('ไม่มีรูปที่จะวิเคราะห์.')
             : Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
@@ -365,7 +409,7 @@ class _MyAppState extends State<MyApp> {
         top: 0.0,
         left: 0.0,
         width: size.width,
-        child: _image == null ? Text('No image selected.') : Image.file(_image),
+        child: _image == null ? Text('ไม่มีรูปที่จะวิเคราะห์.') : Image.file(_image),
       ));
     }
 
@@ -434,13 +478,24 @@ class _MyAppState extends State<MyApp> {
         children: stackChildren,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: predictImagePicker,
+        //onPressed: predictImagePicker,
+        onPressed: (){
+          _showChoiceDialog(context);
+        },
         tooltip: 'Pick Image',
         child: Icon(Icons.image),
       ),
     );
   }
+
+
+  String _getDateNow() {
+    var now = new DateTime.now();
+    var formatter = new DateFormat('yyyy-MM-dd HH:mm:ss');
+    return formatter.format(now);
+  }
 }
+
 
 class Tflite {
   static const MethodChannel _channel = const MethodChannel('tflite');

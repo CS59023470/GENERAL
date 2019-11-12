@@ -29,7 +29,7 @@ class _SignUpState extends State<SignUp> {
               child: new Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  new Text("SIGN UP", style: new TextStyle(fontSize: 60.0)),
+                  new Text("สมัครบัญชีผู้ใช้", style: new TextStyle(fontSize: 50.0)),
                   new Form(
                     key: _formKey,
                     child: Theme(
@@ -46,23 +46,23 @@ class _SignUpState extends State<SignUp> {
                             TextFormField(
                               validator: (input) {
                                 if (input.isEmpty) {
-                                  return 'Please type an email';
+                                  return '';
                                 }
                               },
                               onSaved: (input) => _email = input,
                               decoration: InputDecoration(
-                                  labelText: 'Email'
+                                  labelText: 'อีเมล'
                               ),
                             ),
                             TextFormField(
                               validator: (input) {
                                 if (input.length > 6) {
-                                  return 'Your password need to be atleast 6 characters';
+                                  return 'รหัสผ่านของท่านต้องมีอย่างน้อย 6 ตัวขึ้นไป';
                                 }
                               },
                               onSaved: (input) => _password = input,
                               decoration: InputDecoration(
-                                  labelText: 'Password'
+                                  labelText: 'พาสเวิร์ด'
                               ),
                               obscureText: true,
                             ),
@@ -82,7 +82,7 @@ class _SignUpState extends State<SignUp> {
                             child: RaisedButton(
                               onPressed: signUp,
                               color: Color(0xFF5DB7DE),
-                              child: Text("Sign Up"),
+                              child: Text("สมัคร"),
                             ),//Container
                           ),//RaisedButton
                         ),//Padding

@@ -22,15 +22,8 @@ class _LandingScreenState extends State<LandingScreen> {
 
   String _value1 = null;
   List<String> _values1 = new List<String>();
-  String _value2 = null;
-  List<String> _values2 = new List<String>();
-  String _value3 = null;
-  List<String> _values3 = new List<String>();
-  String _value4 = null;
-  List<String> _values4 = new List<String>();
   File imageFile;
   String _userId;
-  bool _busy = false;
 
   _openGallary(BuildContext context) async {
     var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -89,20 +82,21 @@ class _LandingScreenState extends State<LandingScreen> {
     //'category' : '$_value1',
     //'Url_Picture' : '$url'
     //});
-    FirebaseDatabase.instance.reference().child('UserHistory').
+    FirebaseDatabase.instance.reference().child('ForExpert').
     child(_getDateNow()).set({
       'Date': _getDateNow(),
       'Url_Picture': '$url',
-      'category' : '$_value1',
+      //'category' : '$_value1',
       'UID' : '$_userId'
     },);
     return url;
   }
-  @override
-  void initState(){
-    _values1.addAll(["","ชั้นดีเลิศ","ช้นดี","ชั้นปานกลาง","ชั้นพอใช้"]);
-    _value1 = _values1.elementAt(0);
-  }
+
+//  @override
+//  void initState(){
+//    _values1.addAll(["","ชั้นดีเลิศ","ช้นดี","ชั้นปานกลาง","ชั้นพอใช้"]);
+//    _value1 = _values1.elementAt(0);
+//  }
 
   //Future uploadPic(BuildContext context) async {
   //String fileName = basename(imageFile.path);
@@ -127,26 +121,26 @@ class _LandingScreenState extends State<LandingScreen> {
                   ? Image.asset(
                 "assets/picture.png", width: 400.0, height: 400.0,)
                   : Image.file(imageFile, width: 400.0, height: 400.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-
-                  //Text('เกรดเนื้อ  :  ',style: TextStyle(fontSize: 15.0),),
-                  ////DropdownButton<String>(
-                    //items: _values1.map<DropdownMenuItem<String>>((String value1){
-                      //return DropdownMenuItem<String>(
-                        //value: value1,
-                        //child: Text(value1,style: TextStyle(color: Colors.black87),),
-                     // );
-                    //}).toList(),
-                    //onChanged: (String newValueone){
-                      //setState(() {
-                        //this._value1 = newValueone;
-                      //});
-                    //},
+//              Row(
+//                mainAxisAlignment: MainAxisAlignment.center,
+//                children: <Widget>[
+//
+//                  Text('เกรดเนื้อ  :  ',style: TextStyle(fontSize: 15.0),),
+//                  DropdownButton<String>(
+//                    items: _values1.map<DropdownMenuItem<String>>((String value1){
+//                      return DropdownMenuItem<String>(
+//                        value: value1,
+//                        child: Text(value1,style: TextStyle(color: Colors.black87),),
+//                      );
+//                    }).toList(),
+//                    onChanged: (String newValueone){
+//                      setState(() {
+//                        this._value1 = newValueone;
+//                     });
+//                    },
 //                  ),
-                ],
-              ),
+//                ],
+//              ),
               RaisedButton(
                   onPressed: () {
                     _showChoiceDialog(context);
@@ -156,7 +150,7 @@ class _LandingScreenState extends State<LandingScreen> {
                 onPressed: () {
                   uploadPic(context);
                 },
-                child: Text("วิเคราะห์ภาพ"),
+                child: Text("ส่งให้ผู้เชี่ยวชาญวิเคราะห์"),
               )
             ], //<Widget>[]
           ), //Column

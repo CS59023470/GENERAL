@@ -41,7 +41,7 @@ class _LoginPageV2State extends State<LoginPageV2> {
                       decoration: new BoxDecoration(
                           color: Color(0xFF5DB7DE),borderRadius: new BorderRadius.circular(30.0)
                       ),
-                      child: new Text("Sign In Account",style: new TextStyle(fontSize: 25.0),),
+                      child: new Text("เข้าสู่ระบบ",style: new TextStyle(fontSize: 25.0),),
                     ),//Container
                   ),//Padding
                 ),//Expanded
@@ -63,23 +63,23 @@ class _LoginPageV2State extends State<LoginPageV2> {
                       TextFormField(
                         validator: (input) {
                           if (input.isEmpty) {
-                            return 'Please type an email';
+                            return '';
                           }
                         },
                         onSaved: (input) => _email = input,
                         decoration: InputDecoration(
-                            labelText: 'Email'
+                            labelText: 'อีเมล'
                         ),
                       ),
                       TextFormField(
                         validator: (input) {
                           if (input.length > 6) {
-                            return 'Your password need to be atleast 6 characters';
+                            return 'รหัสผ่านของท่านต้องมีอย่างน้อย 6 ตัวขึ้นไป';
                           }
                         },
                         onSaved: (input) => _password = input,
                         decoration: InputDecoration(
-                            labelText: 'Password'
+                            labelText: 'พาสเวิร์ด'
                         ),
                         obscureText: true,
                       ),
@@ -99,7 +99,7 @@ class _LoginPageV2State extends State<LoginPageV2> {
                       child: RaisedButton(
                         onPressed: signIn,
                         color: Color(0xFF5DB7DE),
-                        child: Text('Sign in'),
+                        child: Text('ล็อคอิน'),
                       ),//Container
                     ),//RaisedButton
                   ),//Padding
@@ -175,7 +175,7 @@ class _LoginPageV2State extends State<LoginPageV2> {
                         Navigator.push(context, MaterialPageRoute(
                             builder: (context) => ForGot()));
                       },//onTap
-                      child: new Text("Forgot Password",style: new TextStyle(
+                      child: new Text("ลิมรหัสผ่าน",style: new TextStyle(
                           fontSize: 17.0, color: Colors.lightBlue)),
                     ),//GestureDetector
                   ),//Padding
@@ -193,7 +193,7 @@ class _LoginPageV2State extends State<LoginPageV2> {
                         Navigator.push(context, MaterialPageRoute(
                             builder: (context) => SignUp()));
                       },//onTap
-                      child: new Text("Create A New Account",style: new TextStyle(
+                      child: new Text("สมัครบัญชีผู้ใช้",style: new TextStyle(
                           fontSize: 17.0, color: Colors.lightBlue)),
                     ),//GestureDetector
                   ),//Padding

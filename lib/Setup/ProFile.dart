@@ -52,7 +52,7 @@ class _ProFileState extends State<ProFile> {
                       child: new Container(
                         child: new Column(
                           children: <Widget>[
-                            new Text('Email' ,style: TextStyle(fontSize: 23.0, color: Colors.black)),
+                            new Text('อีเมล' ,style: TextStyle(fontSize: 23.0, color: Colors.black)),
                           ],//<Widget>[]
                         ),//Column
                       ),//Container
@@ -102,7 +102,7 @@ class _ProFileState extends State<ProFile> {
                           child: RaisedButton(
                             onPressed: signOut,
                             color: Color(0xFFDBAC99),
-                            child: Text('Sign Out'),
+                            child: Text('ล็อคเอาท์'),
                           ),//RaiseButton
                         ),//Container
                       )//Padding

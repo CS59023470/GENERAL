@@ -1,16 +1,18 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 
 class HisAna extends StatefulWidget {
+
+
   @override
   _HisAnaState createState() => _HisAnaState();
 }
 
 class _HisAnaState extends State<HisAna> {
+
   List<Item> items = List();
   Item item;
   DatabaseReference itemRef;
@@ -22,12 +24,12 @@ class _HisAnaState extends State<HisAna> {
   @override
   void initState() {
     super.initState();
-    item = Item("","");
+    item = Item("", "", "", "","",);
     _initDB();
 
   }
 
-  void _initDB() async{
+  void _initDB() async {
     final FirebaseDatabase database = FirebaseDatabase.instance;
     final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     currentUser = await firebaseAuth.currentUser();
@@ -44,7 +46,6 @@ class _HisAnaState extends State<HisAna> {
     });
   }
 
-
   void handleSubmit() {
     final FormState form = formKey.currentState;
 
@@ -53,69 +54,81 @@ class _HisAnaState extends State<HisAna> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: new AppBar(
+    if (itemRef == null) {
+      return Text('ไม่พบข้อมูล....',
+        style: TextStyle(fontSize: 40.0, color: Colors.white),);
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.lightBlue,
           title: Text('ประวัติการวิเคราะห์'),
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          iconTheme: new IconThemeData(color: Color(0xFF5DB7DE))),
-      backgroundColor: Color(0xFFEBE4D6),
-      body: Column(
-        children: <Widget>[
-          SizedBox(height: 10.0),
-          Flexible(
-            child: FirebaseAnimatedList(
-              query: itemRef,
-              itemBuilder: (BuildContext context, DataSnapshot snapshot,
-                  Animation<double> animation, int index) {
-                return new Column(
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Column(
-                          children: <Widget>[
-                            Image.network(items[index].Picture,width: 250.0,height: 150.0,),
-                            SizedBox(height: 10.0),
-                          ],
-                        ),
-                        Column(
-                          children: <Widget>[
-                            Text(items[index].Date),
-                          ],
-                        ),
-                      ],
-                    ),
-
-                  ],
-                );
-              },
+        ),
+        body: Column(
+          children: <Widget>[
+            SizedBox(height: 10.0),
+            Flexible(
+              child: FirebaseAnimatedList(
+                query: itemRef,
+                itemBuilder: (BuildContext context, DataSnapshot snapshot,
+                    Animation<double> animation, int index) {
+                  return new Column(
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Column(
+                            children: <Widget>[
+                              Image.network(items[index].Picture, width: 200.0,
+                                height: 150.0,),
+                              SizedBox(height: 10.0),
+                            ],
+                          ),
+                          Column(
+                            children: <Widget>[
+                              Text(items[index].Date),
+                              Text(items[index].Detail1),
+                            ],
+                          )
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    }
   }
 }
 
 class Item {
   String key;
   String Picture;
+  String Detail1;
   String Date;
+  String _userId;
+  String value1;
 
-  Item(this.Picture, this.Date);
+  Item(this.Picture, this.Detail1, this.Date, this._userId,this.value1);
 
   Item.fromSnapshot(DataSnapshot snapshot)
       : key = snapshot.key,
         Picture = snapshot.value["Url_Picture"],
-        Date = snapshot.value["datetime"];
+        Detail1 = snapshot.value["category"],
+        Date = snapshot.value["Date"],
+        _userId = snapshot.value["UID"];
 
   toJson() {
     return {
       "Url_Picture": Picture,
-      "datetime": Date,
+      "category": Detail1,
+      "Date": Date,
+      "UID": _userId,
     };
   }
 }

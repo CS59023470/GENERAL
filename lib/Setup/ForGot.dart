@@ -31,7 +31,7 @@ class _ForGotState extends State<ForGot> {
               child: new Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  new Text("Forgot Password",style: new TextStyle(fontSize: 40.0)),
+                  new Text("ลืมรหัสผ่าน",style: new TextStyle(fontSize: 40.0)),
                   new Form(
                     child: new Theme(
                       data: new ThemeData(
@@ -54,7 +54,7 @@ class _ForGotState extends State<ForGot> {
                               },
                               onSaved: (input) => _email = input,
                               decoration: InputDecoration(
-                                  labelText: 'Email'
+                                  labelText: 'อีเมล'
                               ),
                             ),
                           ],//<Widget>[]
@@ -74,7 +74,7 @@ class _ForGotState extends State<ForGot> {
                             child: RaisedButton(
                               onPressed: resetPassword,
                               color: Color(0xFF5DB7DE),
-                              child: Text('Reset Password'),
+                              child: Text('รีเซ็ตรหัสผ่าน'),
                             ),//Container
                           ),//Padding
                         ),//Expanded

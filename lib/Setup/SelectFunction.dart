@@ -16,7 +16,7 @@ class HomeSelectFunction extends State<SelectFunction> {
     return new Scaffold(
       backgroundColor: Colors.white,
       appBar: new AppBar(
-        backgroundColor: Colors.lightGreen,
+        backgroundColor: Colors.lightBlue,
         title: new Text('เลือกรูปแบบการวิเคราะห์'),
       ),
       body: ListView(

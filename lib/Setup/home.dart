@@ -48,13 +48,13 @@ class _HomeState extends State<Home> {
                       )//Padding
                     ],//<Widget>[]
                   ),//Row
-                  new Text("MENU",style: new TextStyle(fontSize: 65.0)),
+                  new Text("เมนู",style: new TextStyle(fontSize: 65.0)),
                   new SizedBox(
                       height: 35.0),//SizeBox
                   Row(
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(left: 110.0,),
+                        padding: const EdgeInsets.only(left: 135.0,),
                         child: GestureDetector(
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute(
@@ -65,7 +65,7 @@ class _HomeState extends State<Home> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 new Image(
-                                    image: new AssetImage("assets/camera.png"),
+                                    image: new AssetImage("assets/research.png"),
                                     height: 150, width: 150),
                               ],
                             ),
@@ -74,7 +74,7 @@ class _HomeState extends State<Home> {
                       ),
                     ],
                   ),
-                  new Text("CAMERA",style: new TextStyle(fontSize: 30)),
+                  new Text("วิเคราะห์รูปภาพ",style: new TextStyle(fontSize: 30)),
                   new SizedBox(
                       height: 50.0),//SizeBox
                   Row(
@@ -100,7 +100,7 @@ class _HomeState extends State<Home> {
                       ),//Padding
                     ],//<Widget>[]
                   ),//Row
-                  new Text("BEEF POSITION",style: new TextStyle(fontSize: 30)),
+                  new Text("แผนที่",style: new TextStyle(fontSize: 30)),
                 ],//<Widget>[]
               ),//Column
             ),//Container
