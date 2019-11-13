@@ -229,6 +229,7 @@ class _LoginPageV2State extends State<LoginPageV2> {
 
     await _firebaseAuth.signInWithCredential(GoogleAuthProvider.getCredential(
         idToken: userAuth.idToken, accessToken: userAuth.accessToken));
+    await
     Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
   }
 

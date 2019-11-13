@@ -44,7 +44,7 @@ class _MyAppState extends State<MyApp> {
   double _imageWidth;
   bool _busy = false;
   String _userId;
-  Position _currentPosition;
+  String _result = 'Unknown';
 
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -65,6 +65,7 @@ class _MyAppState extends State<MyApp> {
     });
     predictImage(image);
   }
+
 
   Future uploadPic(BuildContext context) async {
     String fileName = basename(_image.path);
