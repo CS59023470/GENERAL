@@ -83,13 +83,23 @@ class _LandingScreenState extends State<LandingScreen> {
     //'Url_Picture' : '$url'
     //});
     FirebaseDatabase.instance.reference().child('ForExpert').
-    child(_getDateNow()).set({
+    child('2fIhRXsXwoRF65vihkQP9DHpkat2').child(_getDateNow()).set({
       'Date': _getDateNow(),
       'Url_Picture': '$url',
-      //'category' : '$_value1',
       'UID' : '$_userId'
     },);
-    return url;
+    FirebaseDatabase.instance.reference().child('ForExpert').
+    child('qghtUnU0fPQHe1MmEEKqxWne74v2').child(_getDateNow()).set({
+      'Date': _getDateNow(),
+      'Url_Picture': '$url',
+      'UID' : '$_userId'
+    },);
+    FirebaseDatabase.instance.reference().child('ForExpert').
+    child('q9R16J8Ge2Rnat6BZKc5q2Uh5y33').child(_getDateNow()).set({
+      'Date': _getDateNow(),
+      'Url_Picture': '$url',
+      'UID' : '$_userId'
+    },);
   }
 
 //  @override
