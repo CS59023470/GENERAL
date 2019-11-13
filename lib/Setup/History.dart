@@ -24,12 +24,12 @@ class _HisAnaState extends State<HisAna> {
   @override
   void initState() {
     super.initState();
-    item = Item("", "", "", "","",);
+    item = Item("", "", "","","",);
     _initDB();
 
   }
 
-  void _initDB() async {
+  void _initDB() async{
     final FirebaseDatabase database = FirebaseDatabase.instance;
     final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     currentUser = await firebaseAuth.currentUser();
@@ -89,11 +89,44 @@ class _HisAnaState extends State<HisAna> {
                           Column(
                             children: <Widget>[
                               Text(items[index].Date),
-                              Text(items[index].Detail1),
                             ],
-                          )
+                          ),
                         ],
                       ),
+                      ExpansionTile(
+                        backgroundColor: Colors.black54,
+                        trailing: Icon(Icons.search),
+                        title: Text('กดเพื่อดูรายละเอียดการาวิเคราะห์',style: TextStyle(color: Colors.black),),
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Column(
+                                children: <Widget>[
+                                  new Text('    รายละเอียด    ',style: TextStyle(fontSize: 16.0),),
+                                  new SizedBox(height: 15.0,),
+                                  new Text('คะแนน'),
+                                  new SizedBox(height: 15.0,),
+                                  new Text('ความแม่นยำ'),
+                                  new SizedBox(height: 15.0,),
+                                ],
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+//                                  new Text(items[index].value1),
+//                                  new SizedBox(height: 15.0,),
+//                                  Text(items[index].value1,
+//                                    style: TextStyle(fontSize: 16.0),),
+//                                  new SizedBox(height: 15.0,),
+//                                  Text(items[index].value2,
+//                                   style: TextStyle(fontSize: 16.0),),
+//                                  new SizedBox(height: 15.0,),
+                                ],
+                              )
+                            ],
+                          ),
+                        ],
+                      )
                     ],
                   );
                 },
@@ -109,26 +142,28 @@ class _HisAnaState extends State<HisAna> {
 class Item {
   String key;
   String Picture;
-  String Detail1;
   String Date;
   String _userId;
   String value1;
+  String value2;
 
-  Item(this.Picture, this.Detail1, this.Date, this._userId,this.value1);
+  Item(this.Picture, this.Date, this._userId, this.value1, this.value2);
 
   Item.fromSnapshot(DataSnapshot snapshot)
       : key = snapshot.key,
         Picture = snapshot.value["Url_Picture"],
-        Detail1 = snapshot.value["category"],
         Date = snapshot.value["Date"],
-        _userId = snapshot.value["UID"];
+        _userId = snapshot.value["UID"],
+        value1 = snapshot.value["index"],
+        value2 = snapshot.value["confidence"];
 
   toJson() {
     return {
       "Url_Picture": Picture,
-      "category": Detail1,
       "Date": Date,
       "UID": _userId,
+      "index" : value1,
+      "confidence" : value2,
     };
   }
 }

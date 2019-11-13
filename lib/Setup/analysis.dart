@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
+import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -43,6 +44,9 @@ class _MyAppState extends State<MyApp> {
   bool _busy = false;
   String _userId;
 
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   Future predictImagePicker() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
     if (image == null) return;
@@ -58,6 +62,26 @@ class _MyAppState extends State<MyApp> {
       _busy = true;
     });
     predictImage(image);
+  }
+
+  Future uploadPic(BuildContext context) async {
+    String fileName = basename(_image.path);
+    StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child(
+        fileName);
+    final StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
+
+    var downUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+    var url = downUrl.toString();
+    FirebaseDatabase.instance.reference().child('UserHistory').child(
+        '$_userId')
+        .child(_getDateNow()).set({
+      'Date': _getDateNow(),
+      'Url_Picture' : '$url',
+      'score' : _recognitions,
+
+
+    });
+    return url;
   }
 
 
@@ -126,7 +150,6 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-
     _busy = true;
 
     loadModel().then((val) {
@@ -135,6 +158,7 @@ class _MyAppState extends State<MyApp> {
       });
     });
   }
+
 
   Future loadModel() async {
     Tflite.close();
@@ -429,7 +453,8 @@ class _MyAppState extends State<MyApp> {
           }).toList()
               : [],
         ),
-      ));
+       ),
+      );
     } //else if (_model == ssd || _model == yolo) {
       //stackChildren.addAll(renderBoxes(size));
     //} else if (_model == posenet) {
@@ -448,12 +473,19 @@ class _MyAppState extends State<MyApp> {
       appBar: AppBar(
         title: const Text(''),
         actions: <Widget>[
+          RaisedButton(
+            color: Colors.blue,
+            onPressed: (){
+              uploadPic(context);
+            },
+            child: Text('บันทึกลงในประวัติ',style: TextStyle(color: Colors.white),),
+          ),
           PopupMenuButton<String>(
             onSelected: onSelect,
             itemBuilder: (context) {
               List<PopupMenuEntry<String>> menuEntries = [
                 const PopupMenuItem<String>(
-                  child: Text(mobile),
+                  child: Text('วิเคราะห์'),
                   value: mobile,
                 ),
 //                  const PopupMenuItem<String>(
@@ -471,14 +503,13 @@ class _MyAppState extends State<MyApp> {
               ];
               return menuEntries;
             },
-          )
+          ),
         ],
       ),
       body: Stack(
         children: stackChildren,
       ),
       floatingActionButton: FloatingActionButton(
-        //onPressed: predictImagePicker,
         onPressed: (){
           _showChoiceDialog(context);
         },
@@ -488,13 +519,13 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-
   String _getDateNow() {
     var now = new DateTime.now();
     var formatter = new DateFormat('yyyy-MM-dd HH:mm:ss');
     return formatter.format(now);
   }
 }
+
 
 
 class Tflite {
