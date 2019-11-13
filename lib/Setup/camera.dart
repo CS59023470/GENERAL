@@ -171,7 +171,7 @@ class _LandingScreenState extends State<LandingScreen> {
 
   String _getDateNow() {
     var now = new DateTime.now();
-    var formatter = new DateFormat('yyyy-MM-dd HH:mm');
+    var formatter = new DateFormat('yyyy-MM-dd HH:mm:ss');
     return formatter.format(now);
   }
 }

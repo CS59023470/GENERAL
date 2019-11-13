@@ -72,7 +72,7 @@ flutter:
     - assets/menu.png
     - assets/picture.png
     - assets/checklist.png
-    - assets/mobilenet_v1_1.0_224.tflite
+    - assets/mobilenet_v1_1.0_224.lite
     - assets/mobilenet_v1_1.0_224.txt
     - assets/research.png
 

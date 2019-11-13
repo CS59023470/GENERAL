@@ -80,13 +80,13 @@ class _MyAppState extends State<MyApp> {
         .child(_getDateNow()).set({
       'Date': _getDateNow(),
       'Url_Picture' : '$url',
-      'score' : _recognitions,
+      'Score' : _recognitions
     });
     FirebaseDatabase.instance.reference().child('UserHistory').child(_getDateNow()).set({
       'UID' : '$_userId',
       'Date': _getDateNow(),
       'Url_Picture' : '$url',
-      'score' : _recognitions,
+      'Score' : _recognitions
     });
   }
 
@@ -193,7 +193,9 @@ class _MyAppState extends State<MyApp> {
 //          break;
         default:
           res = await Tflite.loadModel(
-            model: "assets/mobilenet_v1_1.0_224.tflite",
+            //model: "assets/mobilenet_v1_1.0_224.tflite",
+            //labels: "assets/mobilenet_v1_1.0_224.txt",
+            model: "assets/mobilenet_v1_1.0_224.lite",
             labels: "assets/mobilenet_v1_1.0_224.txt",
           );
       }
