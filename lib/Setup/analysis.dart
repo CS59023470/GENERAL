@@ -8,6 +8,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -43,6 +44,7 @@ class _MyAppState extends State<MyApp> {
   double _imageWidth;
   bool _busy = false;
   String _userId;
+  Position _currentPosition;
 
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -78,10 +80,13 @@ class _MyAppState extends State<MyApp> {
       'Date': _getDateNow(),
       'Url_Picture' : '$url',
       'score' : _recognitions,
-
-
     });
-    return url;
+    FirebaseDatabase.instance.reference().child('UserHistory').child(_getDateNow()).set({
+      'UID' : '$_userId',
+      'Date': _getDateNow(),
+      'Url_Picture' : '$url',
+      'score' : _recognitions,
+    });
   }
 
 
@@ -524,6 +529,7 @@ class _MyAppState extends State<MyApp> {
     var formatter = new DateFormat('yyyy-MM-dd HH:mm:ss');
     return formatter.format(now);
   }
+
 }
 
 
