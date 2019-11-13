@@ -9,9 +9,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:location/location.dart';
 import 'package:path/path.dart';
 
 
@@ -37,6 +39,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  Completer<GoogleMapController> _controller = Completer();
+  LocationData currentLocation;
   File _image;
   List _recognitions;
   String _model = mobile;
@@ -44,10 +48,10 @@ class _MyAppState extends State<MyApp> {
   double _imageWidth;
   bool _busy = false;
   String _userId;
-  String _result = 'Unknown';
 
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
 
   Future predictImagePicker() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -80,13 +84,13 @@ class _MyAppState extends State<MyApp> {
         .child(_getDateNow()).set({
       'Date': _getDateNow(),
       'Url_Picture' : '$url',
-      'Score' : _recognitions
+      'Score' : _recognitions,
     });
     FirebaseDatabase.instance.reference().child('UserHistory').child(_getDateNow()).set({
       'UID' : '$_userId',
       'Date': _getDateNow(),
       'Url_Picture' : '$url',
-      'Score' : _recognitions
+      'Score' : _recognitions,
     });
   }
 
@@ -531,6 +535,29 @@ class _MyAppState extends State<MyApp> {
     var now = new DateTime.now();
     var formatter = new DateFormat('yyyy-MM-dd HH:mm:ss');
     return formatter.format(now);
+  }
+
+  Future<LocationData> getCurrentLocation() async {
+    Location location = Location();
+    try {
+      return await location.getLocation();
+    } on PlatformException catch (e) {
+      if (e.code == 'PERMISSION_DENIED') {
+        // Permission denied
+      }
+      return null;
+    }
+  }
+
+  Future _goToMe() async {
+    final GoogleMapController controller = await _controller.future;
+    currentLocation = await getCurrentLocation();
+    controller.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(
+              currentLocation.latitude,
+              currentLocation.longitude),
+        )));
   }
 
 }

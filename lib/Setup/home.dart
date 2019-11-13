@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mass/Setup/Location.dart';
 import 'package:mass/Setup/ProFile.dart';
 import 'package:mass/Setup/SelectFunction.dart';
+import 'package:mass/Setup/SignIn.dart';
 import 'package:mass/Setup/camera.dart';
 
 
@@ -13,6 +14,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +76,7 @@ class _HomeState extends State<Home> {
                       ),
                     ],
                   ),
-                  new Text("วิเคราะห์รูปภาพ",style: new TextStyle(fontSize: 30)),
+                  new Text("วิเคราะห์รูปภาพ",style: new TextStyle(fontSize: 28)),
                   new SizedBox(
                       height: 50.0),//SizeBox
                   Row(
@@ -100,7 +102,7 @@ class _HomeState extends State<Home> {
                       ),//Padding
                     ],//<Widget>[]
                   ),//Row
-                  new Text("แผนที่",style: new TextStyle(fontSize: 30)),
+                  new Text("ตำแหน่งเนื้อที่เคยมีการวิเคราะห์",style: new TextStyle(fontSize: 25.0)),
                 ],//<Widget>[]
               ),//Column
             ),//Container
@@ -108,5 +110,10 @@ class _HomeState extends State<Home> {
         ],//<Widget>[]
       ),//ListView
     );//Scaffold
+  }
+  void signOut() async{
+    _firebaseAuth.signOut();
+
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPageV2()));
   }
 }

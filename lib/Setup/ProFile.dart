@@ -50,11 +50,11 @@ class _ProFileState extends State<ProFile> {
                       alignment: Alignment.topLeft,
                       height: 40.0,
                       child: new Container(
-                        child: new Column(
-                          children: <Widget>[
-                            new Text('อีเมล' ,style: TextStyle(fontSize: 23.0, color: Colors.black)),
-                          ],//<Widget>[]
-                        ),//Column
+ //                       child: new Column(
+ //                         children: <Widget>[
+//                            new Text('อีเมล' ,style: TextStyle(fontSize: 23.0, color: Colors.black)),
+ //                         ],//<Widget>[]
+ //                       ),//Column
                       ),//Container
                     ),//padding
                   ),//Expanded
@@ -90,27 +90,27 @@ class _ProFileState extends State<ProFile> {
                 )//Expanded
               ],//<Widget>[]
             ),//Row
-            new Row(
-              children: <Widget>[
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 18.0),
-                        child: Container(
-                          child: RaisedButton(
-                            onPressed: signOut,
-                            color: Color(0xFFDBAC99),
-                            child: Text('ล็อคเอาท์'),
-                          ),//RaiseButton
-                        ),//Container
-                      )//Padding
-                    ],//<Widget>[]
-                  ),//Column
-                )//Expanded
-              ],//<Widget>[]
-            )//Row
+//            new Row(
+//              children: <Widget>[
+//                Expanded(
+//                  child: Column(
+//                    mainAxisAlignment: MainAxisAlignment.end,
+//                    children: <Widget>[
+//                      Padding(
+//                        padding: const EdgeInsets.only(bottom: 18.0),
+//                        child: Container(
+//                          child: RaisedButton(
+//                            onPressed: signOut,
+//                            color: Color(0xFFDBAC99),
+//                            child: Text('ล็อคเอาท์'),
+//                          ),//RaiseButton
+ //                       ),//Container
+//                      )//Padding
+//                    ],//<Widget>[]
+//                  ),//Column
+//                )//Expanded
+//              ],//<Widget>[]
+//            )//Row
           ],//<Widget>[]
         )//ListView
     );
